@@ -99,6 +99,8 @@ mod tests;
     archive_attr(derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug, Hash))
 )]
 #[cfg_attr(feature = "rkyv-validation", archive(check_bytes))]
+#[cfg_attr(feature = "abi_stable", derive(abi_stable::StableAbi))]
+#[cfg_attr(feature = "abi_stable", repr(transparent))]
 pub struct NaiveDate {
     yof: NonZeroI32, // (year << 13) | of
 }

@@ -115,6 +115,8 @@ mod tz_info;
 )]
 #[cfg_attr(feature = "rkyv-validation", archive(check_bytes))]
 #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
+#[cfg_attr(feature = "abi_stable", derive(abi_stable::StableAbi))]
+#[cfg_attr(feature = "abi_stable", repr(transparent))]
 pub struct Local;
 
 impl Local {

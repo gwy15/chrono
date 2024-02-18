@@ -82,6 +82,8 @@ pub const MAX_DATETIME: NaiveDateTime = NaiveDateTime::MAX;
 )]
 #[cfg_attr(feature = "rkyv-validation", archive(check_bytes))]
 #[cfg_attr(all(feature = "arbitrary", feature = "std"), derive(arbitrary::Arbitrary))]
+#[cfg_attr(feature = "abi_stable", derive(abi_stable::StableAbi))]
+#[cfg_attr(feature = "abi_stable", repr(C))]
 pub struct NaiveDateTime {
     date: NaiveDate,
     time: NaiveTime,

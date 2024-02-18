@@ -27,6 +27,8 @@ use crate::naive::{NaiveDate, NaiveDateTime};
     archive_attr(derive(Clone, Copy, PartialEq, Eq, Hash, Debug))
 )]
 #[cfg_attr(feature = "rkyv-validation", archive(check_bytes))]
+#[cfg_attr(feature = "abi_stable", derive(abi_stable::StableAbi))]
+#[cfg_attr(feature = "abi_stable", repr(transparent))]
 pub struct FixedOffset {
     local_minus_utc: i32,
 }

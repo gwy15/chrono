@@ -56,6 +56,9 @@ mod tests;
     archive(compare(PartialEq, PartialOrd))
 )]
 #[cfg_attr(feature = "rkyv-validation", archive(check_bytes))]
+#[cfg_attr(feature = "abi_stable", derive(abi_stable::StableAbi))]
+#[cfg_attr(feature = "abi_stable", repr(C))]
+#[cfg_attr(feature = "abi_stable", sabi(bound(Tz::Offset: abi_stable::StableAbi)))]
 pub struct DateTime<Tz: TimeZone> {
     datetime: NaiveDateTime,
     offset: Tz::Offset,
@@ -1838,4 +1841,18 @@ fn test_decodable_json_timestamps<FUtc, FFixed, FLocal, E>(
         *local_from_str("-1").expect("-1 timestamp should parse"),
         Utc.with_ymd_and_hms(1969, 12, 31, 23, 59, 59).unwrap()
     );
+}
+
+#[cfg(all(feature = "abi_stable", test))]
+mod test_abi_stable {
+    use super::*;
+    struct _DateTimeUtcIsAbiStable
+    where
+        DateTime<Utc>: abi_stable::StableAbi;
+    struct _DateTimeFixedOffsetIsAbiStable
+    where
+        DateTime<FixedOffset>: abi_stable::StableAbi;
+    struct _DateTimeLocalIsAbiStable
+    where
+        DateTime<Local>: abi_stable::StableAbi;
 }

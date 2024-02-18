@@ -49,6 +49,8 @@ use crate::{Date, DateTime};
 )]
 #[cfg_attr(feature = "rkyv-validation", archive(check_bytes))]
 #[cfg_attr(all(feature = "arbitrary", feature = "std"), derive(arbitrary::Arbitrary))]
+#[cfg_attr(feature = "abi_stable", derive(abi_stable::StableAbi))]
+#[cfg_attr(feature = "abi_stable", repr(transparent))]
 pub struct Utc;
 
 #[cfg(feature = "now")]
